@@ -126,7 +126,6 @@ namespace Stocks.DataAccess.Ado
                 { // Also Deletes Children 
                     DeleteEntity(item, conn);
                     item = null;
-                    return item;
                 }
                 else if (item.StockId == 0)
                 {
@@ -148,13 +147,26 @@ namespace Stocks.DataAccess.Ado
             return item;
         }
 
-        private static void PersistChildren(Stock client, SqlConnection conn)
+        private static void PersistChildren(Stock stock, SqlConnection conn)
         {
-            foreach (var holding in client.Holdings)
+            if (stock.Holdings.Any())
             {
-                holding.StockId = client.StockId;
-                HoldingChildRepository hld = new HoldingChildRepository();
-                hld.PersistChild(holding, conn);
+                var repo = new HoldingChildRepository();
+                for (var index = stock.Holdings.Count() - 1; index >= 0; index--)
+                {
+                    stock.Holdings[index].StockId = stock.StockId;
+                    var holding = repo.PersistChild(stock.Holdings[index], conn);
+                    if (holding == null)
+                    {
+                        // Persist returns null, remove Holding from client
+                        stock.Holdings.RemoveAt(index);
+                    }
+                    else
+                    {
+                        // For insert, replaces with object that has id assigned.
+                        stock.Holdings[index] = holding;
+                    }
+                }
             }
         }
 
@@ -165,9 +177,9 @@ namespace Stocks.DataAccess.Ado
         internal static void DeleteEntity(Stock item, SqlConnection conn)
         {
             // Cascade delete Holdings
-            foreach (var genre in item.Holdings)
+            foreach (var holding in item.Holdings)
             {
-                HoldingChildRepository.DeleteEntity(genre, conn);
+                HoldingChildRepository.DeleteEntity(holding, conn);
             }
 
             // Delete Stock itself

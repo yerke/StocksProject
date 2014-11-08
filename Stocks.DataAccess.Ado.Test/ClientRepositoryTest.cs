@@ -199,8 +199,6 @@ namespace Stocks.DataAccess.Ado.Test
         {
             // Arrange
             Client newClient = CreateSampleClient();
-            // Record a few properties of child objects, so
-            // we can find them later.
 
             // Act - Insert Client
             var existingClient = _clientRepo.Persist(newClient);
@@ -258,8 +256,6 @@ namespace Stocks.DataAccess.Ado.Test
             var refetchModifiedHolding = refetch.Holdings
                 .Where(o => o.HoldingId == holdingModifiedHoldingId).FirstOrDefault();
             Assert.IsTrue(refetchModifiedHolding.Quantity == 888000);
-            //Assert.IsNull(refetchCredit1);
-            //Assert.IsNotNull(refetchCredit2);
 
             // Clean-up (Act for Delete)
             existingClient.IsMarkedForDeletion = true;

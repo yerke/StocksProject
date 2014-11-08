@@ -167,14 +167,6 @@ namespace Stocks.DataAccess.Ado
 
         private static void PersistChildren(Client client, SqlConnection conn)
         {
-            /*
-            foreach (var holding in client.Holdings)
-            {
-                holding.ClientId = client.ClientId;
-                HoldingChildRepository hld = new HoldingChildRepository();
-                hld.PersistChild(holding, conn);
-            }
-            */
 
             if (client.Holdings.Any())
             {
@@ -182,16 +174,16 @@ namespace Stocks.DataAccess.Ado
                 for (var index = client.Holdings.Count() - 1; index >= 0; index--)
                 {
                     client.Holdings[index].ClientId = client.ClientId;
-                    var clientGenre = repo.PersistChild(client.Holdings[index], conn);
-                    if (clientGenre == null)
+                    var holding = repo.PersistChild(client.Holdings[index], conn);
+                    if (holding == null)
                     {
-                        // Persist returns null, remove ShowGenre from client
+                        // Persist returns null, remove Holding from client
                         client.Holdings.RemoveAt(index);
                     }
                     else
                     {
                         // For insert, replaces with object that has id assigned.
-                        client.Holdings[index] = clientGenre;
+                        client.Holdings[index] = holding;
                     }
                 }
             }
@@ -204,9 +196,9 @@ namespace Stocks.DataAccess.Ado
         internal static void DeleteEntity(Client item, SqlConnection conn)
         {
             // Cascade delete Holdings
-            foreach (var genre in item.Holdings)
+            foreach (var holding in item.Holdings)
             {
-                HoldingChildRepository.DeleteEntity(genre, conn);
+                HoldingChildRepository.DeleteEntity(holding, conn);
             }
 
             // Delete Client itself
