@@ -268,17 +268,20 @@ namespace Stocks.DataAccess.Ado.Test
 
         /*
         [TestMethod]
-        public void ShowRepository_InvalidRating_ThrowsSqlException()
+        // I don't have a need for this test, since my Client
+        // table does not depend on other tables. Yerke
+        public void ClientRepository_InvalidRating_ThrowsSqlException()
         {
             // Arrange
-            Show newShow = CreateSampleShow();
+            Client newClient = CreateSampleClient();
 
             try
             {
                 // Act - Insert Show with an invalid rating
                 // (Doesn't refer to an existing person id).
-                newShow.MpaaRatingId = -1;
-                var existingShow = _showRepo.Persist(newShow);
+                newClient.MpaaRatingId = -1; // Client table in my case
+                    // does not depend on other tables
+                var existingShow = _showRepo.Persist(newClient);
                 // Excution should not get pas the above line.
                 // If it does, test fails.
                 Assert.Fail();
@@ -288,40 +291,38 @@ namespace Stocks.DataAccess.Ado.Test
                 Assert.IsInstanceOfType(ex, typeof(SqlException));
             }
         }
-
         */
 
         #endregion
 
         #region Transaction Tests
-        /*
+
             [TestMethod]
-            public void ShowRepository_InvalidCredit_TransactionRollsBack()
+            public void ClientRepository_InvalidStock_TransactionRollsBack()
             {
                 // Arrange
-                Show newShow = CreateSampleShow();
+                Client newClient = CreateSampleClient();
 
                 // Act - Insert Show with a bad Cast member record
                 // (Doesn't refer to an existing person id).
-                newShow.Credits[0].PersonId = -1;
+                newClient.Holdings[0].StockId = -1;
                 try
                 {
                     // Should throw exception
-                    var existingShow = _showRepo.Persist(newShow);
+                    var existingClient = _clientRepo.Persist(newClient);
                     Assert.Fail();
                 }
                 catch (Exception ex)
                 {
-                    Assert.IsInstanceOfType(ex, typeof(SqlException));
+                    Assert.IsInstanceOfType(ex, typeof(ApplicationException));
                 }
 
                 // Make sure parent show object was NOT saved.
-                var savedShow = _showRepo.Fetch()
-                    .Where(o => o.Title == "TestTitle")
+                var savedClient = _clientRepo.Fetch()
+                    .Where(o => o.Code == "TestTitle")
                     .FirstOrDefault();
-                Assert.IsNull(savedShow);
+                Assert.IsNull(savedClient);
             }
-            */
 
         #endregion
 

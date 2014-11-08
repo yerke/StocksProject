@@ -1,0 +1,5 @@
+# add files and wildcards for files to be ignored by git
+*.dll
+bin/
+obj/
+Debug/
