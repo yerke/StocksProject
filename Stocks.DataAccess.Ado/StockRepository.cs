@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Ucla.Common.ExtensionMethods;
 using Ucla.Common.Interfaces;
+using Ucla.Common.Utility;
 using Stocks.Domain;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Transactions;
 
 namespace Stocks.DataAccess.Ado
 {
@@ -119,30 +121,42 @@ namespace Stocks.DataAccess.Ado
 
             var connString = ConfigurationManager
                 .ConnectionStrings["AppConnection"].ConnectionString;
-            using (SqlConnection conn = new SqlConnection(connString))
+            try
             {
-                conn.Open();
-                if (item.IsMarkedForDeletion)
-                { // Also Deletes Children 
-                    DeleteEntity(item, conn);
-                    item = null;
-                }
-                else if (item.StockId == 0)
+                using (TransactionScope ts = new TransactionScope())
                 {
-                    InsertEntity(item, conn);
-                    PersistChildren(item, conn);
-                    item.IsDirty = false;
+                    using (SqlConnection conn = new SqlConnection(connString))
+                    {
+                        conn.Open();
+                        if (item.IsMarkedForDeletion)
+                        { // Also Deletes Children 
+                            DeleteEntity(item, conn);
+                            item = null;
+                        }
+                        else if (item.StockId == 0)
+                        {
+                            InsertEntity(item, conn);
+                            PersistChildren(item, conn);
+                            item.IsDirty = false;
+                        }
+                        else if (item.IsDirty)
+                        {
+                            UpdateEntity(item, conn);
+                            PersistChildren(item, conn);
+                            item.IsDirty = false;
+                        }
+                        else
+                        { // No changes to show, but might be changes to children 
+                            PersistChildren(item, conn);
+                        }
+                    }
+                    ts.Complete();
                 }
-                else if (item.IsDirty)
-                {
-                    UpdateEntity(item, conn);
-                    PersistChildren(item, conn);
-                    item.IsDirty = false;
-                }
-                else
-                { // No changes to show, but might be changes to children 
-                    PersistChildren(item, conn);
-                }
+            }
+            catch (SqlException ex)
+            {
+                var msg = SqlExceptionDecoder.GetFriendlyMessage("Show", ex);
+                throw new ApplicationException(msg, ex);
             }
             return item;
         }
