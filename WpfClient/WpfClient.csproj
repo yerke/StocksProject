@@ -39,6 +39,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -56,6 +58,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ClientsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -63,6 +69,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ClientsView.xaml.cs">
+      <DependentUpon>ClientsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -95,6 +104,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Stocks.DataAccess.Ado\Stocks.DataAccess.Ado.csproj">
+      <Project>{6df8b8d2-675e-4c55-902b-2e159a55187d}</Project>
+      <Name>Stocks.DataAccess.Ado</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Stocks.Domain\Stocks.Domain.csproj">
+      <Project>{a8cb7c67-99af-4578-b47f-7825d9bde9fc}</Project>
+      <Name>Stocks.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Ucla.Common\Ucla.Common.csproj">
+      <Project>{5e7911fd-9f84-4da1-aa3b-1ac91729d374}</Project>
+      <Name>Ucla.Common</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

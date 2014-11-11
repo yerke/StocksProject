@@ -27,7 +27,8 @@ namespace WpfClient
 
         private void ClientsButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You clicked Clients button!");
+            // MessageBox.Show("You clicked Clients button!");
+            this.MainContentArea.Child = new ClientsView();
         }
 
         private void StockButton_Click(object sender, RoutedEventArgs e)

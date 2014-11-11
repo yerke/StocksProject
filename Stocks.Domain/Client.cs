@@ -68,6 +68,18 @@ namespace Stocks.Domain
 
         #endregion
 
+        #region Computed Properties
+
+        public string FirstLastName
+        {
+            get
+            {
+                return (FirstName + " " + LastName).Trim();
+            }
+        }
+
+        #endregion
+
         #region Overrides
 
         public override string ToString()
