@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WpfClient.Properties
+namespace Stocks.WpfClient.Properties
 {
 
 

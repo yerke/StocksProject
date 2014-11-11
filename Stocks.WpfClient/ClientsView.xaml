@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="WpfClient.StocksView"
+﻿<UserControl x:Class="Stocks.WpfClient.ClientsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -23,7 +23,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock
-                        Text="{Binding Path=CompanyName}" />
+                        Text="{Binding Path=FirstLastName}" />
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>

@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace WpfClient
+namespace Stocks.WpfClient
 {
     /// <summary>
     /// Interaction logic for StocksView.xaml

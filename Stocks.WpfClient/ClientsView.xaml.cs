@@ -16,7 +16,7 @@ using Stocks.DataAccess.Ado;
 using Stocks.Domain;
 using System.Collections.ObjectModel;
 
-namespace WpfClient
+namespace Stocks.WpfClient
 {
     /// <summary>
     /// Interaction logic for ClientsView.xaml
