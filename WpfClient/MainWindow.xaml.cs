@@ -33,7 +33,8 @@ namespace WpfClient
 
         private void StockButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("You clicked Stocks button!");
+            // MessageBox.Show("You clicked Stocks button!");
+            this.MainContentArea.Child = new StocksView();
         }
     }
 }
