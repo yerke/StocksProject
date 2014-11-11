@@ -1,0 +1,45 @@
+﻿<Window x:Class="WpfClient.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <Style x:Key="TopNavButton" TargetType="Button">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Margin" Value="8" />
+            <Setter Property="Padding" Value="6" />
+            <Setter Property="MinWidth" Value="100" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Button 
+                Grid.Column="1" 
+                x:Name="ClientsButton" 
+                Content="Clients" 
+                Style="{DynamicResource ResourceKey=TopNavButton}" Click="ClientsButton_Click"/>
+            <Button 
+                Grid.Column="2" 
+                x:Name="StockButton" 
+                Content="Stocks" 
+                Style="{DynamicResource ResourceKey=TopNavButton}" Click="StockButton_Click"/>
+        </Grid>      
+        <Border 
+            Grid.Row="1"
+            x:Name="MainContentArea" 
+            BorderBrush="Black"
+            BorderThickness="1">
+        </Border>
+    </Grid>
+</Window>

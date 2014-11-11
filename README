@@ -1,8 +1,10 @@
 My project for UCLA Extension's Programming in C# for Visual Studio .NET Platform II
 taught by John Darragh (Oct-Nov 2014).
 
+Already done:
+1) Completed data access layer and unit test
+
 Things to do:
-1) Complete data access layer
-2) Write the WPF app :)
+1) Write the WPF app :)
 
 Yerke
