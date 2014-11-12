@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Stocks.Domain;
+using Stocks.WpfClient.ExtensionMethods;
 
 namespace Stocks.WpfClient
 {
@@ -25,6 +27,20 @@ namespace Stocks.WpfClient
             InitializeComponent();
 
             StockCodeDropDownColumn.ItemsSource = LookupCache.Stocks;
+        }
+
+        private void AddHoldingButton_Click(object sender, RoutedEventArgs e)
+        {
+            var client = DataContext as Client;
+            var holding = new Holding();
+            client.Holdings.Add(holding);
+
+            var cell = HoldingsDataGrid.FindCellByBoundItemAndColumnIndex(holding, 0);
+            if (cell != null)
+            {
+                cell.Focus();
+                cell.IsEditing = true;
+            }
         }
     }
 }

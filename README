@@ -3,8 +3,12 @@ taught by John Darragh (Oct-Nov 2014).
 
 Already done:
 1) Completed data access layer and unit test
+2) Wrote the basic WPF app
+3) Finished Add and Delete holdings functionality
 
 Things to do:
-1) Write the WPF app :)
+1) Fix IsEnabled on Save and Cancel buttons
+2) Add search functionality
+3) Complete StockViews part
 
 Yerke

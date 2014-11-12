@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500">
+             d:DesignHeight="400" d:DesignWidth="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -14,6 +14,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="2*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -91,14 +92,6 @@
                     DisplayMemberPath="Code"
                     SelectedValuePath="StockId"
                     SelectedValueBinding="{Binding StockId}" />
-                <!--<DataGridComboBoxColumn
-                    Width="*"
-                    Header="Company"
-                    x:Name="PersonDropDownColumn"
-                    
-                    DisplayMemberPath="LastFirstName"
-                    SelectedValuePath="PersonId"
-                    SelectedValueBinding="{Binding PersonId}" />-->
                 <DataGridTextColumn
                     Width="*"
                     Header="Quantity"
@@ -112,7 +105,21 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
+                <DataGridCheckBoxColumn
+                    Width="Auto"
+                    Header="Delete"
+                    Binding="{Binding IsMarkedForDeletion}" />
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel 
+            Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="3"
+            Orientation="Horizontal"
+            HorizontalAlignment="Right">
+            <Button
+                x:Name="AddHoldingButton"
+                Padding="8,6" Click="AddHoldingButton_Click">
+                Add Holding
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

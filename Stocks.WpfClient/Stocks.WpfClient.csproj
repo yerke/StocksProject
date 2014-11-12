@@ -57,10 +57,12 @@
       <DependentUpon>ClientView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\NullToHiddenConverter.cs" />
+    <Compile Include="ExtensionMethods\WpfDependencyObjectExtensions.cs" />
     <Compile Include="LookupCache.cs" />
     <Compile Include="StocksView.xaml.cs">
       <DependentUpon>StocksView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExtensionMethods\WpfDataGridExtensions.cs" />
     <Page Include="ClientsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

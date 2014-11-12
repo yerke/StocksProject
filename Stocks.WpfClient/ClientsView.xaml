@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:Stocks.WpfClient"
              xmlns:converters="clr-namespace:Stocks.WpfClient.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="800">
+             d:DesignHeight="500" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:NullToHiddenConverter x:Key="NullToHiddenConverter" />
     </UserControl.Resources>
@@ -81,7 +81,7 @@
                 x:Name="SaveButton"
                 MinWidth="75"
                 IsDefault="True"
-                IsEnabled="{Binding IsDirty}" Click="SaveButton_Click">
+                IsEnabled="{Binding ElementName=ResultsListBox,Path=SelectedItem.IsGraphDirty}" Click="SaveButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="4">Save</TextBlock>
                 </StackPanel>
@@ -90,7 +90,7 @@
                 x:Name="CancelButton"
                 MinWidth="75"
                 IsCancel="True"
-                IsEnabled="{Binding IsDirty}" Click="CancelButton_Click">
+                IsEnabled="{Binding ElementName=ResultsListBox,Path=SelectedItem.IsGraphDirty}" Click="CancelButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="4">Cancel</TextBlock>
                 </StackPanel>

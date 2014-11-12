@@ -40,24 +40,27 @@ namespace Stocks.WpfClient
 
         private void Search()
         {
-            var previouslySelectedItem = (Client)ResultsListBox.SelectedItem;
-            _clients = new ObservableCollection<Client>(_clientRepository.Fetch());
-            this.ResultsListBox.ItemsSource = _clients;
-            Client selectedClient = null;
-            if (previouslySelectedItem != null)
+            var previous = (Client)ResultsListBox.SelectedItem;
+            _clients.Clear();
+            /*
+            ShowCriteria crit = new ShowCriteria
             {
-                selectedClient = _clients
-                .Where(o => o.ClientId == previouslySelectedItem.ClientId)
-                .FirstOrDefault();
-            }
-            if (selectedClient != null)
+                Title = this.TitleCriterion.Text,
+                MpaaRatingId = (int)MpaaRatingCriterion.SelectedValue
+            };
+            */
+            //foreach (var s in _clientRepository.Fetch(crit))
+            foreach (var s in _clientRepository.Fetch())
             {
-                ResultsListBox.SelectedItem = selectedClient;
+                _clients.Add(s);
             }
-            else
-            {
-                ResultsListBox.SelectedIndex = 0;
-            }
+
+            // Find our way back to the previously selected
+            // list entry by Id, if it's still there.
+            ResultsListBox.SelectedItem =
+                _clients.Where(s => previous != null
+                    && s.ClientId == previous.ClientId)
+                    .FirstOrDefault();
         }
 
         private void SearchButton_Click(object sender, RoutedEventArgs e)
