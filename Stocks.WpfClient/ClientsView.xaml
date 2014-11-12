@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Stocks.WpfClient"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="500">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -15,6 +16,20 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button
+            Grid.Column="2" x:Name="SearchButton"
+            HorizontalAlignment="Right"
+            Margin="4"
+            Padding="6" Click="SearchButton_Click">
+                Search
+            </Button>
+        </Grid>
         <ListBox
             Grid.Row="1" Margin="4"
             x:Name="ResultsListBox"
@@ -27,5 +42,51 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <StackPanel 
+            Grid.Row="2" Orientation="Horizontal"
+            HorizontalAlignment="Right">
+            <Button
+                x:Name="AddButton"
+                MinWidth="75" Click="AddButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="4">Add</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button
+                x:Name="DeleteButton"
+                MinWidth="75" Click="DeleteButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="4">Delete</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <local:ClientView 
+            Grid.Row="1" Grid.Column="1"
+            DataContext="{Binding ElementName=ResultsListBox, Path=SelectedItem}"/>
+        <StackPanel
+            Grid.Row="2" Grid.Column="1"
+            Margin="0,0,0,0"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal"
+            DataContext="{Binding ElementName=ResultsListBox, Path=SelectedItem}">
+            <Button
+                x:Name="SaveButton"
+                MinWidth="75"
+                IsDefault="True"
+                IsEnabled="{Binding IsDirty}" Click="SaveButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="4">Save</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button
+                x:Name="CancelButton"
+                MinWidth="75"
+                IsCancel="True"
+                IsEnabled="{Binding IsDirty}" Click="CancelButton_Click">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="4">Cancel</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
     </Grid>
 </UserControl>

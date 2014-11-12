@@ -32,14 +32,71 @@ namespace Stocks.WpfClient
             InitializeComponent();
 
             _clientRepository = new ClientRepository();
-            _clients = new ObservableCollection<Client>();
 
-            foreach (var s in _clientRepository.Fetch(null))
+            Search();
+        }
+
+        private void Search()
+        {
+            var previouslySelectedItem = (Client)ResultsListBox.SelectedItem;
+            _clients = new ObservableCollection<Client>(_clientRepository.Fetch());
+            this.ResultsListBox.ItemsSource = _clients;
+            Client selectedClient = null;
+            if (previouslySelectedItem != null)
             {
-                _clients.Add(s);
+                selectedClient = _clients
+                .Where(o => o.ClientId == previouslySelectedItem.ClientId)
+                .FirstOrDefault();
             }
+            if (selectedClient != null)
+            {
+                ResultsListBox.SelectedItem = selectedClient;
+            }
+            else
+            {
+                ResultsListBox.SelectedIndex = 0;
+            }
+        }
 
-            ResultsListBox.ItemsSource = _clients;
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            Search();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            var newItem = new Client();
+            _clients.Add(newItem);
+            ResultsListBox.SelectedItem = newItem;
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (Client)ResultsListBox.SelectedItem;
+            if (item == null) return;
+            var msg = String.Format("Are you sure you want to delete client {0}?", 
+                item.FirstLastName);
+            if (MessageBox.Show(msg, "Confirm Delete?",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning)
+                == MessageBoxResult.Yes)
+            {
+                item.IsMarkedForDeletion = true;
+                _clientRepository.Persist(item);
+                _clients.Remove(item);
+            } 
+        }
+
+        private void SaveButton_Click(object sender, RoutedEventArgs e)
+        {
+            var item = (Client)ResultsListBox.SelectedItem;
+            if (item == null) return;
+            _clientRepository.Persist(item);
+            Search();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            Search();
         }
     }
 }
