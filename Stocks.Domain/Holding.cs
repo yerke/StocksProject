@@ -9,6 +9,13 @@ namespace Stocks.Domain
     public class Holding : DomainBase
     {
         #region Constructor
+
+        public Holding()
+        {
+            LastChangeDate = DateTime.Now.Date; 
+            // So it will not set to 1/1/0001 by default at creation
+        }
+
         #endregion
 
         #region Fields
