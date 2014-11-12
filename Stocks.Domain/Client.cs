@@ -28,37 +28,69 @@ namespace Stocks.Domain
         public int ClientId
         {
             get { return _clientId; }
-            set { _clientId = value; }
+            set 
+            {
+                if (_clientId == value) return;
+                _clientId = value;
+                OnPropertyChanged();
+            }
         }
 
         public string Code
         {
             get { return _code; }
-            set { _code = value ?? String.Empty; }
+            set 
+            {
+                if (_code == (value ?? String.Empty)) return;
+                _code = value ?? String.Empty;
+                OnPropertyChanged();
+            }
         }
 
         public string FirstName
         {
             get { return _firstName; }
-            set { _firstName = value ?? String.Empty; }
+            set 
+            { 
+                if (_firstName == (value ?? String.Empty)) return;
+                _firstName = value ?? String.Empty;
+                OnPropertyChanged();
+                OnPropertyChanged("FirstLastName");
+            }
         }
 
         public string LastName
         {
             get { return _lastName; }
-            set { _lastName = value ?? String.Empty; }
+            set 
+            {
+                if (_lastName == (value ?? String.Empty)) return;
+                _lastName = value ?? String.Empty;
+                OnPropertyChanged();
+                OnPropertyChanged("FirstLastName");
+            }
         }
         
         public string Phone
         {
             get { return _phone; }
-            set { _phone = value ?? String.Empty; }
+            set 
+            { 
+                if (_phone == (value ?? String.Empty)) return;
+                _phone = value ?? String.Empty;
+                OnPropertyChanged();
+            }
         }
 
         public string Address
         {
             get { return _address; }
-            set { _address = value ?? String.Empty; }
+            set 
+            { 
+                if (_address == (value ?? String.Empty)) return;
+                _address = value ?? String.Empty;
+                OnPropertyChanged();
+            }
         }
 
         public List<Holding> Holdings

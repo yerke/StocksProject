@@ -26,31 +26,56 @@ namespace Stocks.Domain
         public int HoldingId
         {
             get { return _holdingId; }
-            set { _holdingId = value; }
+            set 
+            {
+                if (_holdingId == value) return;
+                _holdingId = value;
+                OnPropertyChanged();
+            }
         }
 
         public int ClientId
         {
             get { return _clientId; }
-            set { _clientId = value; }
+            set 
+            { 
+                if (_clientId == value) return;
+                _clientId = value;
+                OnPropertyChanged();
+            }
         }
 
         public int StockId
         {
             get { return _stockId; }
-            set { _stockId = value; }
+            set 
+            { 
+                if (_stockId == value) return;
+                _stockId = value;
+                OnPropertyChanged();
+            }
         }
 
         public Int64 Quantity
         {
             get { return _quantity; }
-            set { _quantity = value; }
+            set 
+            { 
+                if (_quantity == value) return;
+                _quantity = value;
+                OnPropertyChanged();
+            }
         }
 
         public DateTime LastChangeDate
         {
             get { return _lastChangeDate; }
-            set { _lastChangeDate = value; }
+            set 
+            {
+                if (_lastChangeDate == value) return;
+                _lastChangeDate = value;
+                OnPropertyChanged();
+            }
         }
 
         #endregion

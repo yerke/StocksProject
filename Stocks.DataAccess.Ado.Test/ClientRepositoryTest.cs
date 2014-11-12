@@ -15,15 +15,7 @@ namespace Stocks.DataAccess.Ado.Test
         StockRepository _stockRepo;
 
         List<Stock> _stocks;
-        /*
-        GenreRepository _genreRepo;
-        CreditTypeRepository _creditTypeRepo;
-        PersonRepository _personRepo;
 
-        List<Genre> _genres;
-        List<CreditType> _creditTypes;
-        List<Person> _people;
-        */
         #endregion
 
         #region Initialize and Cleanup
@@ -35,15 +27,6 @@ namespace Stocks.DataAccess.Ado.Test
             _stockRepo = new StockRepository();
 
             _stocks = _stockRepo.Fetch().ToList();
-            /*
-            _genreRepo = new GenreRepository();
-            _creditTypeRepo = new CreditTypeRepository();
-            _personRepo = new PersonRepository();
-
-            _genres = _genreRepo.Fetch().ToList();
-            _creditTypes = _creditTypeRepo.Fetch().ToList();
-            _people = _personRepo.Fetch().ToList();
-             */
         }
 
         /// <summary>

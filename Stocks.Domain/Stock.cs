@@ -26,25 +26,45 @@ namespace Stocks.Domain
         public int StockId
         {
             get { return _stockId; }
-            set { _stockId = value; }
+            set 
+            { 
+                if (_stockId == value) return;
+                _stockId = value;
+                OnPropertyChanged();
+            }
         }
 
         public string Code
         {
             get { return _code; }
-            set { _code = value ?? String.Empty; }
+            set 
+            { 
+                if (_code == (value ?? String.Empty)) return;
+                _code = value ?? String.Empty;
+                OnPropertyChanged();
+            }
         }
 
         public string CompanyName
         {
             get { return _companyName; }
-            set { _companyName = value ?? String.Empty; }
+            set 
+            { 
+                if (_companyName == (value ?? String.Empty)) return;
+                _companyName = value ?? String.Empty;
+                OnPropertyChanged();
+            }
         }
 
         public decimal LastPrice
         {
             get { return _lastPrice; }
-            set { _lastPrice = value; }
+            set 
+            { 
+                if (_lastPrice == value) return;
+                _lastPrice = value;
+                OnPropertyChanged();
+            }
         }
 
         public List<Holding> Holdings

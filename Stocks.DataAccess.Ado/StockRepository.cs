@@ -49,6 +49,7 @@ namespace Stocks.DataAccess.Ado
                             s.Code = dr.AsString("Code");
                             s.CompanyName = dr.AsString("CompanyName");
                             s.LastPrice = dr.AsDecimal("LastPrice");
+                            s.IsDirty = false;
 
                             data.Add(s);
                         }
@@ -62,6 +63,7 @@ namespace Stocks.DataAccess.Ado
                             h.StockId = dr.AsInt32("StockId");
                             h.Quantity = dr.AsInt64("Quantity");
                             h.LastChangeDate = dr.AsDateTime("LastChangeDate");
+                            h.IsDirty = false;
 
                             data.Where(o => o.StockId == h.StockId)
                                 .Single().Holdings.Add(h);
@@ -82,6 +84,7 @@ namespace Stocks.DataAccess.Ado
                             s.Code = dr.AsString("Code");
                             s.CompanyName = dr.AsString("CompanyName");
                             s.LastPrice = dr.AsDecimal("LastPrice");
+                            s.IsDirty = false;
 
                             data.Add(s);
                         }
@@ -95,6 +98,7 @@ namespace Stocks.DataAccess.Ado
                             h.StockId = dr.AsInt32("StockId");
                             h.Quantity = dr.AsInt64("Quantity");
                             h.LastChangeDate = dr.AsDateTime("LastChangeDate");
+                            h.IsDirty = false;
                             s.Holdings.Add(h);
                         }
                     }

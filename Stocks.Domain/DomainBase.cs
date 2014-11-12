@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Stocks.Domain
 {
-    public abstract class DomainBase
+    public abstract class DomainBase : INotifyPropertyChanged
     {
         #region Fields
 
@@ -24,7 +26,12 @@ namespace Stocks.Domain
         public bool IsDirty
         { 
             get { return _isDirty; } 
-            set { _isDirty = value; } 
+            set 
+            {
+                if (_isDirty == value) return;
+                _isDirty = value;
+                OnPropertyChanged();
+            } 
         }
 
         /// <summary> 
@@ -35,7 +42,31 @@ namespace Stocks.Domain
         public bool IsMarkedForDeletion
         { 
             get { return _isMarkedForDeletion; }
-            set { _isMarkedForDeletion = value; }
+            set 
+            {
+                if (_isMarkedForDeletion == value) return;
+                _isMarkedForDeletion = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberNameAttribute] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+
+            if (propertyName != "IsDirty")
+            {
+                this.IsDirty = true;
+            }
         }
 
         #endregion
