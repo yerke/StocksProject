@@ -32,8 +32,10 @@ namespace Stocks.WpfClient
             InitializeComponent();
 
             _clientRepository = new ClientRepository();
+            _clients = new ObservableCollection<Client>();
+            ResultsListBox.ItemsSource = _clients;
 
-            Search();
+            //Search();
         }
 
         private void Search()

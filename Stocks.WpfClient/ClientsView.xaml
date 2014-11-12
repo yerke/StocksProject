@@ -4,8 +4,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Stocks.WpfClient"
+             xmlns:converters="clr-namespace:Stocks.WpfClient.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
+    <UserControl.Resources>
+        <converters:NullToHiddenConverter x:Key="NullToHiddenConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -62,13 +66,17 @@
         </StackPanel>
         <local:ClientView 
             Grid.Row="1" Grid.Column="1"
-            DataContext="{Binding ElementName=ResultsListBox, Path=SelectedItem}"/>
+            DataContext="{Binding ElementName=ResultsListBox, Path=SelectedItem}"
+            Visibility="{Binding ElementName=ResultsListBox, Path=SelectedItem, 
+            Converter={StaticResource NullToHiddenConverter}}"/>
         <StackPanel
             Grid.Row="2" Grid.Column="1"
             Margin="0,0,0,0"
             HorizontalAlignment="Right"
             Orientation="Horizontal"
-            DataContext="{Binding ElementName=ResultsListBox, Path=SelectedItem}">
+            DataContext="{Binding ElementName=ResultsListBox, Path=SelectedItem}"
+            Visibility="{Binding ElementName=ResultsListBox, Path=SelectedItem, 
+            Converter={StaticResource NullToHiddenConverter}}">
             <Button
                 x:Name="SaveButton"
                 MinWidth="75"
