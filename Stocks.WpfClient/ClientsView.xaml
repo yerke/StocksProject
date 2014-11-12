@@ -22,15 +22,26 @@
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="16" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                VerticalAlignment="Bottom" Margin="4,4,4,2"
+                Text="Name" />
+            <TextBox
+                Grid.Row="1"
+                x:Name="NameCriterion"
+                />
             <Button
-            Grid.Column="2" x:Name="SearchButton"
-            HorizontalAlignment="Right"
-            Margin="4"
-            Padding="6" Click="SearchButton_Click">
+                Grid.Column="2" x:Name="SearchButton"
+                Grid.RowSpan="2"
+                HorizontalAlignment="Right"
+                Margin="4"
+                Padding="6" Click="SearchButton_Click">
                 Search
             </Button>
         </Grid>

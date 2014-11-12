@@ -42,15 +42,11 @@ namespace Stocks.WpfClient
         {
             var previous = (Client)ResultsListBox.SelectedItem;
             _clients.Clear();
-            /*
-            ShowCriteria crit = new ShowCriteria
+            ClientCriteria crit = new ClientCriteria
             {
-                Title = this.TitleCriterion.Text,
-                MpaaRatingId = (int)MpaaRatingCriterion.SelectedValue
+                Name = this.NameCriterion.Text
             };
-            */
-            //foreach (var s in _clientRepository.Fetch(crit))
-            foreach (var s in _clientRepository.Fetch())
+            foreach (var s in _clientRepository.Fetch(crit))
             {
                 _clients.Add(s);
             }

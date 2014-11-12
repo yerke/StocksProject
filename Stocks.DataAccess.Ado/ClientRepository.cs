@@ -71,6 +71,49 @@ namespace Stocks.DataAccess.Ado
                                 .Single().Holdings.Add(h); 
                         }
                     }
+                    else if (criteria is ClientCriteria)
+                    {
+                        var sql = new StringBuilder();
+                        sql.Append(@"select * from Client 
+                        where FirstName like '%' + @Name + '%' 
+                        or LastName like '%' + @Name + '%';");
+                        sql.Append(@"select * from Holding h 
+                        join Client c on h.ClientId = c.ClientId 
+                        where c.FirstName like '%' + @Name + '%' 
+                        or c.LastName like '%' + @Name + '%';");
+                        cmd.CommandText = sql.ToString();
+                        cmd.Parameters.AddWithValue("@Name", ((ClientCriteria)criteria).Name);
+                        var dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            var c = new Client();
+                            c.ClientId = dr.AsInt32("ClientId");
+                            c.Code = dr.AsString("Code");
+                            c.FirstName = dr.AsString("FirstName");
+                            c.LastName = dr.AsString("LastName");
+                            c.Phone = dr.AsString("Phone");
+                            c.Address = dr.AsString("Address");
+                            c.IsDirty = false;
+
+                            data.Add(c);
+                        }
+
+                        dr.NextResult();
+                        while (dr.Read())
+                        {
+                            var h = new Holding();
+                            h.HoldingId = dr.AsInt32("HoldingId");
+                            h.ClientId = dr.AsInt32("ClientId");
+                            h.StockId = dr.AsInt32("StockId");
+                            h.Quantity = dr.AsInt64("Quantity");
+                            h.LastChangeDate = dr.AsDateTime("LastChangeDate");
+                            h.IsDirty = false;
+
+                            data.Where(o => o.ClientId == h.ClientId)
+                                .Single().Holdings.Add(h);
+                        }
+
+                    }
                     else if (criteria is int)
                     {
                         var sql = new StringBuilder(); 

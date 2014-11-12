@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ClientCriteria.cs" />
     <Compile Include="ClientRepository.cs" />
     <Compile Include="HoldingChildRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
