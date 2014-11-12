@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="500">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -13,10 +13,11 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <TextBlock
             Grid.Column="1" 
@@ -69,5 +70,49 @@
             x:Name="AddressTextBox"
             Text="{Binding Path=Address, UpdateSourceTrigger=PropertyChanged}"
             VerticalContentAlignment="Top" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
+        <Label 
+            Grid.Row="6" Margin="4"
+            HorizontalAlignment="Right"
+            Target="{Binding ElementName=HoldingsDataGrid}"
+            Content="_Holdings" />
+        <DataGrid
+            Grid.Row="6"
+            Grid.Column="1"
+            x:Name="HoldingsDataGrid"
+            ItemsSource="{Binding Holdings}"
+            CanUserAddRows="False"
+            AutoGenerateColumns="False"
+            SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn
+                    Width="*"
+                    Header="Stock"
+                    x:Name="StockCodeDropDownColumn"
+                    DisplayMemberPath="Code"
+                    SelectedValuePath="StockId"
+                    SelectedValueBinding="{Binding StockId}" />
+                <!--<DataGridComboBoxColumn
+                    Width="*"
+                    Header="Company"
+                    x:Name="PersonDropDownColumn"
+                    
+                    DisplayMemberPath="LastFirstName"
+                    SelectedValuePath="PersonId"
+                    SelectedValueBinding="{Binding PersonId}" />-->
+                <DataGridTextColumn
+                    Width="*"
+                    Header="Quantity"
+                    Binding="{Binding Quantity}" />
+                <DataGridTemplateColumn 
+                    Width="*"
+                    Header="Last Change Date">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <DatePicker SelectedDate="{Binding LastChangeDate}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>

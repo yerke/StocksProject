@@ -57,6 +57,7 @@
       <DependentUpon>ClientView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\NullToHiddenConverter.cs" />
+    <Compile Include="LookupCache.cs" />
     <Compile Include="StocksView.xaml.cs">
       <DependentUpon>StocksView.xaml</DependentUpon>
     </Compile>

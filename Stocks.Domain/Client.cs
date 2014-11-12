@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace Stocks.Domain
         private string _lastName = String.Empty;
         private string _phone = String.Empty;
         private string _address = String.Empty;
-        private List<Holding> _holdings = new List<Holding>();
+        private ObservableCollection<Holding> _holdings = new ObservableCollection<Holding>();
 
         #endregion
 
@@ -93,7 +94,7 @@ namespace Stocks.Domain
             }
         }
 
-        public List<Holding> Holdings
+        public ObservableCollection<Holding> Holdings
         {
             get { return _holdings; }
         }

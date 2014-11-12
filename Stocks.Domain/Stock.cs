@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,7 @@ namespace Stocks.Domain
         private string _code = String.Empty;
         private string _companyName = String.Empty;
         private decimal _lastPrice;
-        private List<Holding> _holdings = new List<Holding>();
+        private ObservableCollection<Holding> _holdings = new ObservableCollection<Holding>();
 
         #endregion
 
@@ -67,7 +68,7 @@ namespace Stocks.Domain
             }
         }
 
-        public List<Holding> Holdings
+        public ObservableCollection<Holding> Holdings
         {
             get { return _holdings; }
         }

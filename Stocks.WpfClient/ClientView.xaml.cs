@@ -23,6 +23,8 @@ namespace Stocks.WpfClient
         public ClientView()
         {
             InitializeComponent();
+
+            StockCodeDropDownColumn.ItemsSource = LookupCache.Stocks;
         }
     }
 }
