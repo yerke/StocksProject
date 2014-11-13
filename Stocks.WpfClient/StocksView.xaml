@@ -3,8 +3,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Stocks.WpfClient"
+             xmlns:converters="clr-namespace:Stocks.WpfClient.Converters"
+             xmlns:validationRules="clr-namespace:Stocks.WpfClient.ValidationRules"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="500">
+             d:DesignHeight="500" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:NullToHiddenConverter x:Key="NullToHiddenConverter" />
+        <converters:BooleanNegateConverter x:Key="BooleanNegateConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -14,18 +21,30 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="16" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBlock
+                VerticalAlignment="Bottom" Margin="4,4,4,2"
+                Text="Name" />
+            <TextBox
+                Grid.Row="1"
+                x:Name="NameCriterion"
+                />
             <Button
-            Grid.Column="2" x:Name="SearchButton"
-            HorizontalAlignment="Right"
-            Margin="4"
-            Padding="6">
+                Grid.Column="2" x:Name="SearchButton"
+                Grid.RowSpan="2"
+                HorizontalAlignment="Right"
+                Margin="4"
+                Padding="6" Command="ApplicationCommands.Find">
                 Search
             </Button>
         </Grid>
@@ -33,7 +52,9 @@
             Grid.Row="1" Margin="4"
             x:Name="ResultsListBox"
             IsSynchronizedWithCurrentItem="True"
-            HorizontalContentAlignment="Stretch">
+            HorizontalContentAlignment="Stretch"
+            IsEnabled="{Binding ElementName=SaveButton, Path=IsEnabled, 
+                Converter={StaticResource ResourceKey=BooleanNegateConverter}}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock
@@ -41,5 +62,63 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <StackPanel 
+            Grid.Row="2" Orientation="Horizontal"
+            HorizontalAlignment="Right">
+            <Button
+                x:Name="AddButton"
+                MinWidth="75"
+                Command="ApplicationCommands.New">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="4">Add</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button
+                x:Name="DeleteButton"
+                MinWidth="75"
+                Command="ApplicationCommands.Delete">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="4">Delete</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <local:StockView 
+            Grid.Row="1" Grid.Column="1"
+            DataContext="{Binding ElementName=ResultsListBox, Path=SelectedItem}"
+            Visibility="{Binding ElementName=ResultsListBox, Path=SelectedItem, 
+            Converter={StaticResource NullToHiddenConverter}}"/>
+        <StackPanel
+            Grid.Row="2" Grid.Column="1"
+            Margin="0,0,0,0"
+            HorizontalAlignment="Right"
+            Orientation="Horizontal"
+            DataContext="{Binding ElementName=ResultsListBox, Path=SelectedItem}"
+            Visibility="{Binding ElementName=ResultsListBox, Path=SelectedItem, 
+            Converter={StaticResource NullToHiddenConverter}}">
+            <Button
+                x:Name="SaveButton"
+                MinWidth="75"
+                IsDefault="True"
+                Command="ApplicationCommands.Save">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="4">Save</TextBlock>
+                </StackPanel>
+            </Button>
+            <Button
+                x:Name="CancelButton"
+                MinWidth="75"
+                IsCancel="True"
+                Command="local:CustomCommands.Cancel">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Margin="4">Cancel</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+        <TextBlock
+            x:Name="StatusBarTextBlock"
+            Margin="4"
+            Foreground="Red"
+            Grid.Row="3" Grid.ColumnSpan="2"
+            Text="" />
     </Grid>
 </UserControl>

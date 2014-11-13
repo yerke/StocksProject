@@ -125,12 +125,12 @@ namespace Stocks.Domain
                     }
                     break;
                 case null:
+                    err = Validate("CompanyName");
+                    if (err != null) errors.Add(err);
+
                     err = Validate("Code");
                     if (err != null) errors.Add(err);
-
-                    err = Validate("Company Name");
-                    if (err != null) errors.Add(err);
-
+                    
                     err = Validate("LastPrice");
                     if (err != null) errors.Add(err);
 

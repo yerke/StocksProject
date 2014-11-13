@@ -65,6 +65,9 @@
       <DependentUpon>StocksView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExtensionMethods\WpfDataGridExtensions.cs" />
+    <Compile Include="StockView.xaml.cs">
+      <DependentUpon>StockView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ValidationRules\Int32RangeRule.cs" />
     <Compile Include="ValidationRules\IsDoubleRule.cs" />
     <Compile Include="ValidationRules\IsInt32Rule.cs" />
@@ -96,6 +99,10 @@
     <Page Include="StocksView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="StockView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
