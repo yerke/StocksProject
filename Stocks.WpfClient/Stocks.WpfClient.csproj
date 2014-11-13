@@ -65,6 +65,11 @@
       <DependentUpon>StocksView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExtensionMethods\WpfDataGridExtensions.cs" />
+    <Compile Include="ValidationRules\Int32RangeRule.cs" />
+    <Compile Include="ValidationRules\IsDoubleRule.cs" />
+    <Compile Include="ValidationRules\IsInt32Rule.cs" />
+    <Compile Include="ValidationRules\StringMaxLengthRule.cs" />
+    <Compile Include="ValidationRules\StringRequiredRule.cs" />
     <Page Include="ClientsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

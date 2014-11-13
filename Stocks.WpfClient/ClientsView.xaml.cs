@@ -123,6 +123,20 @@ namespace Stocks.WpfClient
             {
                 Client selectedClient = ResultsListBox.SelectedItem as Client;
                 if (selectedClient == null) return;
+
+                //// Yerke's part starts
+                //var err = selectedClient.Error;
+                //if (err != null)
+                //{
+                //    MessageBox.Show(err);
+                //    return;
+                //}
+                //else
+                //{
+                //    MessageBox.Show("No problem.");
+                //}
+                //// Yerke's part ends
+
                 _clientRepository.Persist(selectedClient);
             }
             catch (ApplicationException ex)

@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Stocks.WpfClient"
              xmlns:converters="clr-namespace:Stocks.WpfClient.Converters"
+             xmlns:validationRules="clr-namespace:Stocks.WpfClient.ValidationRules"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="800">
     <UserControl.Resources>
