@@ -27,13 +27,13 @@ namespace Stocks.WpfClient
 
         private void ClientsButton_Click(object sender, RoutedEventArgs e)
         {
-            // MessageBox.Show("You clicked Clients button!");
+            LookupCache.ClearCache();
             this.MainContentArea.Child = new ClientsView();
         }
 
         private void StockButton_Click(object sender, RoutedEventArgs e)
         {
-            // MessageBox.Show("You clicked Stocks button!");
+            LookupCache.ClearCache(); 
             this.MainContentArea.Child = new StocksView();
         }
     }

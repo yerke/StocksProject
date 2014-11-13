@@ -101,21 +101,21 @@ namespace Stocks.Domain
             string err;
             switch (propertyName)
             {
-                case "Code":
-                    if (String.IsNullOrEmpty(Code))
-                        errors.Add("Code is required.");
-                    if (Code != null && Code.Length > 50)
-                        errors.Add("Code cannot exceed 50 characters");
-                    break;
                 case "CompanyName":
                     if (String.IsNullOrEmpty(CompanyName))
                         errors.Add("Company Name is required.");
                     if (CompanyName != null && CompanyName.Length > 50)
-                        errors.Add("Company Name cannot exceed 50 characters");
+                        errors.Add("Company Name cannot exceed 50 characters.");
+                    break;
+                case "Code":
+                    if (String.IsNullOrEmpty(Code))
+                        errors.Add("Code is required.");
+                    if (Code != null && Code.Length > 50)
+                        errors.Add("Code cannot exceed 50 characters.");
                     break;
                 case "LastPrice":
                     if (LastPrice <= 0)
-                        errors.Add("LastPrice must be a positive number");
+                        errors.Add("LastPrice must be a positive number.");
                     break;
                 case "Holdings":
                     foreach (var h in Holdings)
@@ -141,7 +141,7 @@ namespace Stocks.Domain
                 default:
                     return null;
             }
-            return errors.Count == 0 ? null : String.Join("\r\n", errors);
+            return errors.Count == 0 ? null : String.Join(" ", errors);
         }
 
 

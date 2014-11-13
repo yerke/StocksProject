@@ -53,7 +53,7 @@
             x:Name="ResultsListBox"
             IsSynchronizedWithCurrentItem="True"
             HorizontalContentAlignment="Stretch"
-            IsEnabled="{Binding ElementName=SaveButton, Path=IsEnabled, 
+            IsEnabled="{Binding ElementName=CancelButton, Path=IsEnabled, 
                 Converter={StaticResource ResourceKey=BooleanNegateConverter}}">
             <ListBox.ItemTemplate>
                 <DataTemplate>

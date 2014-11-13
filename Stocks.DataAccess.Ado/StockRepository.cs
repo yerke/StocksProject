@@ -161,6 +161,7 @@ namespace Stocks.DataAccess.Ado
             if (item.StockId == 0 && item.IsMarkedForDeletion)
             {
                 item = null;
+                return item;
             }
 
             var connString = ConfigurationManager

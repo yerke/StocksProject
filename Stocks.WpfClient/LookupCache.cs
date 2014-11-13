@@ -12,6 +12,8 @@ namespace Stocks.WpfClient
     {
         private static ClientRepository _clientRepository;
         private static StockRepository _stockRepository;
+        private static IEnumerable<Client> _clients;
+        private static IEnumerable<Stock> _stocks;
 
         public static IEnumerable<Client> Clients
         {
@@ -31,8 +33,6 @@ namespace Stocks.WpfClient
             }
             set { _clients = value; }
         }
-        private static IEnumerable<Client> _clients;
-
 
         public static IEnumerable<Stock> Stocks
         {
@@ -51,7 +51,11 @@ namespace Stocks.WpfClient
             }
             set { _stocks = value; }
         }
-        private static IEnumerable<Stock> _stocks;
 
+        public static void ClearCache()
+        {
+            _clients = null;
+            _stocks = null;
+        }
     }
 }
