@@ -50,6 +50,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="StockCriteria.cs" />
     <Compile Include="StockRepository.cs" />
   </ItemGroup>
   <ItemGroup>

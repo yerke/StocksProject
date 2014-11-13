@@ -69,6 +69,46 @@ namespace Stocks.DataAccess.Ado
                                 .Single().Holdings.Add(h);
                         }
                     }
+                    else if (criteria is StockCriteria)
+                    {
+                        var sql = new StringBuilder();
+                        sql.Append(@"select * from Stock 
+                        where CompanyName like '%' + @Name + '%' 
+                        or Code like '%' + @Name + '%';");
+                        sql.Append(@"select * from Holding h 
+                        join Stock s on h.StockId = s.StockId 
+                        where s.CompanyName like '%' + @Name + '%' 
+                        or s.Code like '%' + @Name + '%';");
+                        cmd.CommandText = sql.ToString();
+                        cmd.Parameters.AddWithValue("@Name", ((StockCriteria)criteria).Name);
+                        var dr = cmd.ExecuteReader();
+                        while (dr.Read())
+                        {
+                            var s = new Stock();
+                            s.StockId = dr.AsInt32("StockId");
+                            s.Code = dr.AsString("Code");
+                            s.CompanyName = dr.AsString("CompanyName");
+                            s.LastPrice = dr.AsDecimal("LastPrice");
+                            s.IsDirty = false;
+
+                            data.Add(s);
+                        }
+
+                        dr.NextResult();
+                        while (dr.Read())
+                        {
+                            var h = new Holding();
+                            h.HoldingId = dr.AsInt32("HoldingId");
+                            h.ClientId = dr.AsInt32("ClientId");
+                            h.StockId = dr.AsInt32("StockId");
+                            h.Quantity = dr.AsInt64("Quantity");
+                            h.LastChangeDate = dr.AsDateTime("LastChangeDate");
+                            h.IsDirty = false;
+
+                            data.Where(o => o.StockId == h.StockId)
+                                .Single().Holdings.Add(h);
+                        }
+                    }
                     else if (criteria is int)
                     {
                         var sql = new StringBuilder();

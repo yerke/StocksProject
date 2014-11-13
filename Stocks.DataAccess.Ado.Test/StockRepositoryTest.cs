@@ -303,5 +303,37 @@ namespace Stocks.DataAccess.Ado.Test
 
         #endregion
 
+            #region HasChanges Test
+
+            [TestMethod]
+            public void StockRepository_HoldingDirty_SetsGraphDirty()
+            {
+                // Arrange
+                var repo = new StockRepository();
+                var all = repo.Fetch(null).ToList();
+                var StockId = all[0].StockId;
+                var companyName = all[0].CompanyName;
+
+                var item = repo.Fetch(StockId).Single();
+
+                // Change one Holding to change a leaf
+                // of the object graph
+                item.Holdings[0].Quantity++;
+
+                Assert.IsNotNull(item);
+                Assert.IsTrue(item.StockId == StockId);
+                Assert.IsTrue(item.CompanyName == companyName);
+                Assert.IsFalse(item.IsMarkedForDeletion);
+
+                // The IsDirty flag should be false
+                Assert.IsFalse(item.IsDirty);
+
+                // The HasChanges property should
+                // be true, indicating the change to ShowGenres
+                Assert.IsTrue(item.HasChanges);
+            }
+
+            #endregion
+
     }
 }

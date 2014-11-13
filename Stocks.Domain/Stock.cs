@@ -95,6 +95,56 @@ namespace Stocks.Domain
             return false;
         }
 
+        public override string Validate(string propertyName = null)
+        {
+            List<string> errors = new List<string>();
+            string err;
+            switch (propertyName)
+            {
+                case "Code":
+                    if (String.IsNullOrEmpty(Code))
+                        errors.Add("Code is required.");
+                    if (Code != null && Code.Length > 50)
+                        errors.Add("Code cannot exceed 50 characters");
+                    break;
+                case "CompanyName":
+                    if (String.IsNullOrEmpty(CompanyName))
+                        errors.Add("Company Name is required.");
+                    if (CompanyName != null && CompanyName.Length > 50)
+                        errors.Add("Company Name cannot exceed 50 characters");
+                    break;
+                case "LastPrice":
+                    if (LastPrice <= 0)
+                        errors.Add("LastPrice must be a positive number");
+                    break;
+                case "Holdings":
+                    foreach (var h in Holdings)
+                    {
+                        err = h.Validate();
+                        if (err != null) errors.Add(err);
+                    }
+                    break;
+                case null:
+                    err = Validate("Code");
+                    if (err != null) errors.Add(err);
+
+                    err = Validate("Company Name");
+                    if (err != null) errors.Add(err);
+
+                    err = Validate("LastPrice");
+                    if (err != null) errors.Add(err);
+
+                    err = Validate("Holdings");
+                    if (err != null) errors.Add(err);
+
+                    break;
+                default:
+                    return null;
+            }
+            return errors.Count == 0 ? null : String.Join("\r\n", errors);
+        }
+
+
         #endregion
     }
 }
