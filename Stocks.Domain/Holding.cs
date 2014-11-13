@@ -95,6 +95,37 @@ namespace Stocks.Domain
                 " in portfolio " + ClientId.ToString();
         }
 
+        public override string Validate(string propertyName = null)
+        {
+            List<string> errors = new List<string>();
+            string err;
+            switch (propertyName)
+            {
+                // need to add StockId validation when run from Client 
+                // and vice versa?
+                case "Quantity":
+                    if ((Quantity <= 0) || (Quantity % 1 != 0))
+                        errors.Add("Quantity must be a positive integer number");
+                    break;
+                case "LastChangeDate":
+                    if (LastChangeDate < new DateTime(1900, 1, 1) || 
+                        LastChangeDate > DateTime.Now.Date)
+                        errors.Add("LastChangeDate cannot be earlier than 1/1/1900" +
+                            " or later than today's date");
+                    break;
+                case null:
+                    err = Validate("Quantity");
+                    if (err != null) errors.Add(err);
+
+                    err = Validate("LastChangeDate");
+                    if (err != null) errors.Add(err);
+                    break;
+                default:
+                    return null;
+            }
+            return errors.Count == 0 ? null : String.Join("\r\n", errors);
+        }
+
         #endregion
     }
 }

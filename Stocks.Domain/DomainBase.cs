@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Stocks.Domain
 {
-    public abstract class DomainBase : INotifyPropertyChanged
+    public abstract class DomainBase : INotifyPropertyChanged, IDataErrorInfo
     {
         #region Fields
 
@@ -89,6 +89,30 @@ namespace Stocks.Domain
             {
                 this.IsDirty = true;
             }
+        }
+
+        #endregion
+
+        #region IDataErrorInfo Members
+
+        public string Error
+        {
+            get { return Validate(); }
+        }
+
+        public string this[string columnName]
+        {
+            get { return Validate(columnName); }
+        }
+
+        /// <summary>
+        /// Override in derived class to return validation error message
+        /// </summary>
+        /// <param name="columnName">property name, or null to validate entire object.</param>
+        /// <returns>null if property or object is valid.</returns>
+        public virtual string Validate(string columnName = null)
+        {
+            return null;
         }
 
         #endregion

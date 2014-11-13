@@ -33,7 +33,8 @@
         <TextBox
             Grid.Row="1" Grid.Column="1"
             x:Name="FirstNameTextBox"
-            Text="{Binding Path=FirstName, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=FirstName, UpdateSourceTrigger=PropertyChanged,
+                ValidatesOnDataErrors=True}" />
         <Label 
             Grid.Row="2" Margin="4"
             HorizontalAlignment="Right"
@@ -42,7 +43,8 @@
         <TextBox
             Grid.Row="2" Grid.Column="1"
             x:Name="LastNameTextBox"
-            Text="{Binding Path=LastName, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=LastName, UpdateSourceTrigger=PropertyChanged,
+                ValidatesOnDataErrors=True}" />
         <Label 
             Grid.Row="3" Margin="4"
             HorizontalAlignment="Right"
@@ -51,7 +53,8 @@
         <TextBox
             Grid.Row="3" Grid.Column="1"
             x:Name="CodeTextBox"
-            Text="{Binding Path=Code, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Code, UpdateSourceTrigger=PropertyChanged,
+                ValidatesOnDataErrors=True}" />
         <Label 
             Grid.Row="4" Margin="4"
             HorizontalAlignment="Right"
@@ -60,7 +63,8 @@
         <TextBox
             Grid.Row="4" Grid.Column="1"
             x:Name="PhoneTextBox"
-            Text="{Binding Path=Phone, UpdateSourceTrigger=PropertyChanged}" />
+            Text="{Binding Path=Phone, UpdateSourceTrigger=PropertyChanged,
+                ValidatesOnDataErrors=True}" />
         <Label 
             Grid.Row="5" Margin="4"
             HorizontalAlignment="Right"
@@ -69,7 +73,8 @@
         <TextBox
             Grid.Row="5" Grid.Column="1" MaxLines="50"
             x:Name="AddressTextBox"
-            Text="{Binding Path=Address, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding Path=Address, UpdateSourceTrigger=PropertyChanged,
+                ValidatesOnDataErrors=True}"
             VerticalContentAlignment="Top" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
         <Label 
             Grid.Row="6" Margin="4"
@@ -80,6 +85,7 @@
             Grid.Row="6"
             Grid.Column="1"
             x:Name="HoldingsDataGrid"
+            Margin="4"
             ItemsSource="{Binding Holdings}"
             CanUserAddRows="False"
             AutoGenerateColumns="False"
@@ -95,13 +101,14 @@
                 <DataGridTextColumn
                     Width="*"
                     Header="Quantity"
-                    Binding="{Binding Quantity}" />
+                    Binding="{Binding Quantity, ValidatesOnDataErrors=True}" />
                 <DataGridTemplateColumn 
                     Width="*"
                     Header="Last Change Date">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <DatePicker SelectedDate="{Binding LastChangeDate}" />
+                            <DatePicker SelectedDate="{Binding LastChangeDate,
+                                ValidatesOnDataErrors=True}" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>

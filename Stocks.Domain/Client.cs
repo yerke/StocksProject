@@ -133,6 +133,75 @@ namespace Stocks.Domain
             return false;
         }
 
+        public override string Validate(string propertyName = null)
+        {
+            List<string> errors = new List<string>();
+            string err;
+            switch (propertyName)
+            {
+                case "Code":
+                    if (String.IsNullOrEmpty(Code))
+                        errors.Add("Code is required.");
+                    if (Code != null && Code.Length > 50)
+                        errors.Add("Code cannot exceed 50 characters");
+                    break;
+                case "FirstName":
+                    if (String.IsNullOrEmpty(FirstName))
+                        errors.Add("First Name is required.");
+                    if (FirstName != null && FirstName.Length > 50)
+                        errors.Add("Last Name cannot exceed 50 characters");
+                    break;
+                case "LastName":
+                    if (String.IsNullOrEmpty(LastName))
+                        errors.Add("Last Name is required.");
+                    if (LastName != null && LastName.Length > 50)
+                        errors.Add("Last Name cannot exceed 50 characters");
+                    break;
+                case "Phone":
+                    if (String.IsNullOrEmpty(Phone))
+                        errors.Add("Phone is required.");
+                    if (Phone != null && Phone.Length > 50)
+                        errors.Add("Phone cannot exceed 50 characters");
+                    break;
+                case "Address":
+                    if (String.IsNullOrEmpty(Address))
+                        errors.Add("Address is required.");
+                    if (Address != null && Address.Length > 100)
+                        errors.Add("Address cannot exceed 100 characters");
+                    break;
+                case "Holdings":
+                    foreach (var h in Holdings)
+                    {
+                        err = h.Validate();
+                        if (err != null) errors.Add(err);
+                    }
+                    break;
+                case null:
+                    err = Validate("Code");
+                    if (err != null) errors.Add(err);
+
+                    err = Validate("FirstName");
+                    if (err != null) errors.Add(err);
+
+                    err = Validate("LastName");
+                    if (err != null) errors.Add(err);
+
+                    err = Validate("Phone");
+                    if (err != null) errors.Add(err);
+
+                    err = Validate("Address");
+                    if (err != null) errors.Add(err);
+
+                    err = Validate("Holdings");
+                    if (err != null) errors.Add(err);
+
+                    break;
+                default:
+                    return null;
+            }
+            return errors.Count == 0 ? null : String.Join("\r\n", errors);
+        }
+
         #endregion
     }
 }

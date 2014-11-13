@@ -206,7 +206,7 @@ namespace Stocks.DataAccess.Ado
             }
             catch (SqlException ex)
             {
-                var msg = SqlExceptionDecoder.GetFriendlyMessage("Show", ex);
+                var msg = SqlExceptionDecoder.GetFriendlyMessage("Client", ex);
                 throw new ApplicationException(msg, ex);
             }
             return item;

@@ -113,8 +113,8 @@ namespace Stocks.WpfClient
             Client selectedClient = ResultsListBox.SelectedItem as Client;
             e.CanExecute = selectedClient == null
                 ? false
-                //: selectedClient.HasChanges && selectedClient.Error == null;
-                : selectedClient.HasChanges;
+                : selectedClient.HasChanges && selectedClient.Error == null;
+                //: selectedClient.HasChanges;
         }
 
         private void Handle_Save(object sender, ExecutedRoutedEventArgs e)
