@@ -34,6 +34,19 @@ namespace Stocks.Domain
             } 
         }
 
+        /// <summary>
+        /// Property indicating whether the entity or any of its
+        /// children have changes that would require persisting
+        /// when the object is saved.
+        /// </summary>
+        public bool HasChanges
+        {
+            get
+            {
+                return GetHasChanges();
+            }
+        }
+
         /// <summary> 
         /// Property that can be set to cause entity to be deleted 
         /// from database when persisted. 
@@ -48,6 +61,15 @@ namespace Stocks.Domain
                 _isMarkedForDeletion = value;
                 OnPropertyChanged();
             }
+        }
+
+        #endregion
+
+        #region Virtual Members
+
+        protected virtual bool GetHasChanges()
+        {
+            return IsDirty || IsMarkedForDeletion;
         }
 
         #endregion

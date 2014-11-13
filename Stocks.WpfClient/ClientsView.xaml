@@ -41,7 +41,7 @@
                 Grid.RowSpan="2"
                 HorizontalAlignment="Right"
                 Margin="4"
-                Padding="6" Click="SearchButton_Click">
+                Padding="6" Command="ApplicationCommands.Find">
                 Search
             </Button>
         </Grid>
@@ -62,14 +62,16 @@
             HorizontalAlignment="Right">
             <Button
                 x:Name="AddButton"
-                MinWidth="75" Click="AddButton_Click">
+                MinWidth="75"
+                Command="ApplicationCommands.New">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="4">Add</TextBlock>
                 </StackPanel>
             </Button>
             <Button
                 x:Name="DeleteButton"
-                MinWidth="75" Click="DeleteButton_Click">
+                MinWidth="75"
+                Command="ApplicationCommands.Delete">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="4">Delete</TextBlock>
                 </StackPanel>
@@ -92,7 +94,7 @@
                 x:Name="SaveButton"
                 MinWidth="75"
                 IsDefault="True"
-                IsEnabled="{Binding ElementName=ResultsListBox,Path=SelectedItem.IsGraphDirty}" Click="SaveButton_Click">
+                Command="ApplicationCommands.Save">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="4">Save</TextBlock>
                 </StackPanel>
@@ -101,7 +103,7 @@
                 x:Name="CancelButton"
                 MinWidth="75"
                 IsCancel="True"
-                IsEnabled="{Binding ElementName=ResultsListBox,Path=SelectedItem.IsGraphDirty}" Click="CancelButton_Click">
+                Command="local:CustomCommands.Cancel">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="4">Cancel</TextBlock>
                 </StackPanel>

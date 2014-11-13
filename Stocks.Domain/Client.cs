@@ -120,6 +120,19 @@ namespace Stocks.Domain
             return FirstName + " " + LastName + " " + Code;
         }
 
+        protected override bool GetHasChanges()
+        {
+            if (base.GetHasChanges())
+                return true;
+            foreach (var h in Holdings)
+            {
+                if (h.IsDirty || h.IsMarkedForDeletion)
+                    return true;
+            }
+
+            return false;
+        }
+
         #endregion
     }
 }

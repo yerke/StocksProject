@@ -280,32 +280,72 @@ namespace Stocks.DataAccess.Ado.Test
 
         #region Transaction Tests
 
-            [TestMethod]
-            public void ClientRepository_InvalidStock_TransactionRollsBack()
+        [TestMethod]
+        public void ClientRepository_InvalidStock_TransactionRollsBack()
+        {
+            // Arrange
+            Client newClient = CreateSampleClient();
+
+            // Act - Insert Show with a bad Cast member record
+            // (Doesn't refer to an existing person id).
+            newClient.Holdings[0].StockId = -1;
+            try
             {
-                // Arrange
-                Client newClient = CreateSampleClient();
-
-                // Act - Insert Show with a bad Cast member record
-                // (Doesn't refer to an existing person id).
-                newClient.Holdings[0].StockId = -1;
-                try
-                {
-                    // Should throw exception
-                    var existingClient = _clientRepo.Persist(newClient);
-                    Assert.Fail();
-                }
-                catch (Exception ex)
-                {
-                    Assert.IsInstanceOfType(ex, typeof(ApplicationException));
-                }
-
-                // Make sure parent show object was NOT saved.
-                var savedClient = _clientRepo.Fetch()
-                    .Where(o => o.Code == "TestTitle")
-                    .FirstOrDefault();
-                Assert.IsNull(savedClient);
+                // Should throw exception
+                var existingClient = _clientRepo.Persist(newClient);
+                Assert.Fail();
             }
+            catch (Exception ex)
+            {
+                Assert.IsInstanceOfType(ex, typeof(ApplicationException));
+            }
+
+            // Make sure parent show object was NOT saved.
+            var savedClient = _clientRepo.Fetch()
+                .Where(o => o.Code == "TestTitle")
+                .FirstOrDefault();
+            Assert.IsNull(savedClient);
+        }
+
+        #endregion
+
+        #region HasChanges Test
+
+        [TestMethod]
+        public void ClientRepository_HoldingDirty_SetsGraphDirty()
+        {
+            // Arrange
+            var repo = new ClientRepository();
+            var all = repo.Fetch(null).ToList();
+            var ClientId = all[0].ClientId;
+            var firstName = all[0].FirstName;
+
+            var item = repo.Fetch(ClientId).Single();
+
+            // Change one Holding to change a leaf
+            // of the object graph
+            item.Holdings[0].Quantity++;
+
+            //// Add one Holding to change a leaf
+            //// of the object graph
+            //var sg = new ShowGenre();
+            //var genreRepository = new GenreRepository();
+            //var g = genreRepository.Fetch().First();
+            //sg.GenreId = g.GenreId;
+            //item.ShowGenres.Add(sg);
+
+            Assert.IsNotNull(item);
+            Assert.IsTrue(item.ClientId == ClientId);
+            Assert.IsTrue(item.FirstName == firstName);
+            Assert.IsFalse(item.IsMarkedForDeletion);
+
+            // The IsDirty flag should be false
+            Assert.IsFalse(item.IsDirty);
+
+            // The HasChanges property should
+            // be true, indicating the change to ShowGenres
+            Assert.IsTrue(item.HasChanges);
+        }
 
         #endregion
 

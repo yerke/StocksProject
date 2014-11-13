@@ -27,6 +27,12 @@ namespace Stocks.WpfClient
         ClientRepository _clientRepository;
         ObservableCollection<Client> _clients;
 
+        CommandBinding _newBinding;
+        CommandBinding _deleteBinding;
+        CommandBinding _saveBinding;
+        CommandBinding _cancelBinding;
+        CommandBinding _searchBinding;
+
         public ClientsView()
         {
             InitializeComponent();
@@ -36,7 +42,124 @@ namespace Stocks.WpfClient
             ResultsListBox.ItemsSource = _clients;
 
             //Search();
+
+            _newBinding = new CommandBinding(ApplicationCommands.New);
+            _newBinding.CanExecute += Handle_CanNew;
+            _newBinding.Executed += Handle_New;
+            CommandBindings.Add(_newBinding);
+
+            _deleteBinding = new CommandBinding(ApplicationCommands.Delete);
+            _deleteBinding.CanExecute += Handle_CanDelete;
+            _deleteBinding.Executed += Handle_Delete;
+            CommandBindings.Add(_deleteBinding);
+
+            _saveBinding = new CommandBinding(ApplicationCommands.Save);
+            _saveBinding.CanExecute += Handle_CanSave;
+            _saveBinding.Executed += Handle_Save;
+            CommandBindings.Add(_saveBinding);
+
+            _cancelBinding = new CommandBinding(CustomCommands.Cancel);
+            _cancelBinding.CanExecute += Handle_CanCancel;
+            _cancelBinding.Executed += Handle_Cancel;
+            CommandBindings.Add(_cancelBinding);
+
+            _searchBinding = new CommandBinding(ApplicationCommands.Find);
+            _searchBinding.CanExecute += Handle_CanSearch;
+            _searchBinding.Executed += Handle_Search;
+            CommandBindings.Add(_searchBinding);
         }
+
+        #region Command Implementations
+
+        private void Handle_CanNew(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Client selectedClient = ResultsListBox.SelectedItem as Client;
+            e.CanExecute = selectedClient == null
+                ? true
+                : !selectedClient.HasChanges;
+        }
+
+        private void Handle_New(object sender, ExecutedRoutedEventArgs e)
+        {
+            var newItem = new Client();
+            _clients.Add(newItem);
+            ResultsListBox.SelectedItem = newItem;
+        }
+
+        private void Handle_CanDelete(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Client selectedClient = ResultsListBox.SelectedItem as Client;
+            e.CanExecute = selectedClient != null;
+        }
+
+        private void Handle_Delete(object sender, ExecutedRoutedEventArgs e)
+        {
+            var item = (Client)ResultsListBox.SelectedItem;
+            if (item == null) return;
+            var msg = String.Format("Are you sure you want to delete client {0}?", 
+                item.FirstLastName);
+            if (MessageBox.Show(msg, "Confirm Delete?",
+                MessageBoxButton.YesNo, MessageBoxImage.Warning)
+                == MessageBoxResult.Yes)
+            {
+                item.IsMarkedForDeletion = true;
+                _clientRepository.Persist(item);
+                _clients.Remove(item);
+            }
+        }
+
+        private void Handle_CanSave(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Client selectedClient = ResultsListBox.SelectedItem as Client;
+            e.CanExecute = selectedClient == null
+                ? false
+                //: selectedClient.HasChanges && selectedClient.Error == null;
+                : selectedClient.HasChanges;
+        }
+
+        private void Handle_Save(object sender, ExecutedRoutedEventArgs e)
+        {
+            try
+            {
+                Client selectedClient = ResultsListBox.SelectedItem as Client;
+                if (selectedClient == null) return;
+                _clientRepository.Persist(selectedClient);
+            }
+            catch (ApplicationException ex)
+            {
+                MessageBox.Show(ex.Message, "Save Failed",
+                    MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            Search();
+        }
+
+        private void Handle_CanCancel(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Client selectedClient = ResultsListBox.SelectedItem as Client;
+            e.CanExecute = selectedClient == null
+                ? false
+                : selectedClient.HasChanges;
+        }
+
+        private void Handle_Cancel(object sender, ExecutedRoutedEventArgs e)
+        {
+            Search();
+        }
+
+        private void Handle_CanSearch(object sender, CanExecuteRoutedEventArgs e)
+        {
+            Client selectedClient = ResultsListBox.SelectedItem as Client;
+            e.CanExecute = selectedClient == null || !selectedClient.HasChanges;
+        }
+
+        private void Handle_Search(object sender, ExecutedRoutedEventArgs e)
+        {
+            Search();
+        }
+
+        #endregion
+
+        #region Private Methods
 
         private void Search()
         {
@@ -59,45 +182,6 @@ namespace Stocks.WpfClient
                     .FirstOrDefault();
         }
 
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            Search();
-        }
-
-        private void AddButton_Click(object sender, RoutedEventArgs e)
-        {
-            var newItem = new Client();
-            _clients.Add(newItem);
-            ResultsListBox.SelectedItem = newItem;
-        }
-
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            var item = (Client)ResultsListBox.SelectedItem;
-            if (item == null) return;
-            var msg = String.Format("Are you sure you want to delete client {0}?", 
-                item.FirstLastName);
-            if (MessageBox.Show(msg, "Confirm Delete?",
-                MessageBoxButton.YesNo, MessageBoxImage.Warning)
-                == MessageBoxResult.Yes)
-            {
-                item.IsMarkedForDeletion = true;
-                _clientRepository.Persist(item);
-                _clients.Remove(item);
-            } 
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            var item = (Client)ResultsListBox.SelectedItem;
-            if (item == null) return;
-            _clientRepository.Persist(item);
-            Search();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            Search();
-        }
+        #endregion
     }
 }
