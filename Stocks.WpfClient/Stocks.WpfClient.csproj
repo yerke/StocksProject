@@ -57,6 +57,7 @@
       <DependentUpon>ClientView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\CustomCommands.cs" />
+    <Compile Include="Converters\BooleanNegateConverter.cs" />
     <Compile Include="Converters\NullToHiddenConverter.cs" />
     <Compile Include="ExtensionMethods\WpfDependencyObjectExtensions.cs" />
     <Compile Include="LookupCache.cs" />

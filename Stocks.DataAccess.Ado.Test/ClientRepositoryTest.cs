@@ -326,14 +326,6 @@ namespace Stocks.DataAccess.Ado.Test
             // of the object graph
             item.Holdings[0].Quantity++;
 
-            //// Add one Holding to change a leaf
-            //// of the object graph
-            //var sg = new ShowGenre();
-            //var genreRepository = new GenreRepository();
-            //var g = genreRepository.Fetch().First();
-            //sg.GenreId = g.GenreId;
-            //item.ShowGenres.Add(sg);
-
             Assert.IsNotNull(item);
             Assert.IsTrue(item.ClientId == ClientId);
             Assert.IsTrue(item.FirstName == firstName);

@@ -9,6 +9,7 @@
              d:DesignHeight="500" d:DesignWidth="800">
     <UserControl.Resources>
         <converters:NullToHiddenConverter x:Key="NullToHiddenConverter" />
+        <converters:BooleanNegateConverter x:Key="BooleanNegateConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -49,7 +50,9 @@
             Grid.Row="1" Margin="4"
             x:Name="ResultsListBox"
             IsSynchronizedWithCurrentItem="True"
-            HorizontalContentAlignment="Stretch">
+            HorizontalContentAlignment="Stretch"
+            IsEnabled="{Binding ElementName=SaveButton, Path=IsEnabled, 
+                Converter={StaticResource ResourceKey=BooleanNegateConverter}}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock
