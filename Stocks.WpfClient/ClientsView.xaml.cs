@@ -115,6 +115,15 @@ namespace Stocks.WpfClient
                 ? false
                 : selectedClient.HasChanges && selectedClient.Error == null;
                 //: selectedClient.HasChanges;
+            // Yerke's
+            if (selectedClient != null && selectedClient.Error != null)
+            {
+                StatusBarTextBlock.Text = selectedClient.Error;
+            }
+            else
+            {
+                StatusBarTextBlock.Text = "";
+            }
         }
 
         private void Handle_Save(object sender, ExecutedRoutedEventArgs e)

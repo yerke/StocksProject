@@ -21,6 +21,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -113,5 +114,11 @@
                 </StackPanel>
             </Button>
         </StackPanel>
+        <TextBlock
+            x:Name="StatusBarTextBlock"
+            Margin="4"
+            Foreground="Red"
+            Grid.Row="3" Grid.ColumnSpan="2"
+            Text="" />
     </Grid>
 </UserControl>
