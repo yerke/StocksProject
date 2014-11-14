@@ -133,18 +133,29 @@ namespace Stocks.WpfClient
                 Stock selectedStock = ResultsListBox.SelectedItem as Stock;
                 if (selectedStock == null) return;
 
-                //// Yerke's part starts
-                //var err = selectedStock.Error;
-                //if (err != null)
-                //{
-                //    MessageBox.Show(err);
-                //    return;
-                //}
-                //else
-                //{
-                //    MessageBox.Show("No problem.");
-                //}
-                //// Yerke's part ends
+                List<int> ClientIdList = new List<int>();
+                foreach (var h in selectedStock.Holdings)
+                {
+                    if (h.ClientId == 0)
+                    {
+                        MessageBox.Show("Please select clients for all holdings.",
+                            "Save Failed",
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    else
+                    {
+                        if (ClientIdList.Contains(h.ClientId))
+                        {
+                            MessageBox.Show("One stock cannot be in multiple holdings of one client.",
+                                "Save Failed",
+                                MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                        else
+                            ClientIdList.Add(h.ClientId);
+                    }
+                }
 
                 _stockRepository.Persist(selectedStock);
             }

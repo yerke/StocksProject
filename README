@@ -7,9 +7,10 @@ Already done:
 3) Finished Add and Delete holdings functionality
 4) Added search functionality
 5) Added Client validation
+6) Complete StockViews part
+7) Check in Holding on StockId and ClientId, and their uniqueness
 
 Things to do:
 1) Fix Holding validation interaction with Save button
-2) Complete StockViews part
 
 Yerke
